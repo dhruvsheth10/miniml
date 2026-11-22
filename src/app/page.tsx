@@ -19,7 +19,7 @@ const IDEAS = [
 const FAQ = [
   {
     q: "Can I start now?",
-    a: "Not yet. MiniML is still in development. Join the waitlist and you'll be notified once it's ready for you to start shipping!",
+    a: "Not yet but soon, the YSWS is still in development. Join the waitlist and you'll be notified once it's ready for you to start shipping!",
   },
   {
     q: "Do I need to know machine learning?",
