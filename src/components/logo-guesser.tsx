@@ -56,7 +56,7 @@ function paint(ctx: CanvasRenderingContext2D, { ink, points }: Stroke) {
 }
 
 const toolButton =
-  "inline-flex h-8 items-center gap-1.5 rounded-lg border border-border bg-card px-2.5 font-mono text-[11px] text-ink-soft transition-colors hover:text-ink disabled:pointer-events-none disabled:opacity-40";
+  "inline-flex h-8 items-center gap-1.5 rounded-lg border border-line bg-card px-2.5 text-[13px] font-medium text-ink-soft transition-colors hover:border-ink-faint hover:text-ink disabled:pointer-events-none disabled:opacity-40";
 
 export function LogoGuesser({ intro }: { intro: ReactNode }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -177,9 +177,9 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
     <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
       <div className="flex flex-col gap-10">
         {intro}
-        <div className="px-1">
-          <p className="eyebrow">Logos it knows</p>
-          <ul className="mt-3 flex flex-wrap gap-2">
+        <div>
+          <p className="text-[15px] font-semibold text-ink">Logos it knows</p>
+          <ul className="mt-3 flex flex-wrap gap-1.5">
             {BRANDS.map((b) => (
               <li key={b.id}>
                 <button
@@ -187,10 +187,10 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
                   onClick={() => pickTarget(b.id)}
                   aria-pressed={b.id === target}
                   className={cn(
-                    "rounded-md border px-2 py-1 font-mono text-[11px] leading-none transition-colors",
+                    "rounded-md border px-2 py-1 text-[13px] leading-none transition-colors",
                     b.id === target
                       ? "border-ink bg-ink text-paper"
-                      : "border-border bg-card text-ink-soft hover:text-ink",
+                      : "border-line text-ink-soft hover:border-ink-faint hover:text-ink",
                   )}
                 >
                   {b.name}
@@ -201,8 +201,15 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
         </div>
       </div>
 
-      <div data-chip="bus" className="inset-screen flex w-full flex-col rounded-2xl p-4 text-left sm:p-5">
-        <span className="font-mono text-[11px] tracking-wide text-ink">logo_guess.py</span>
+      <div className="panel flex w-full flex-col rounded-2xl p-4 text-left sm:p-5">
+        <div className="flex items-center gap-2">
+          <span className="flex gap-1.5" aria-hidden>
+            <span className="size-2.5 rounded-full bg-line" />
+            <span className="size-2.5 rounded-full bg-line" />
+            <span className="size-2.5 rounded-full bg-line" />
+          </span>
+          <span className="ml-1 font-mono text-[12px] text-ink-soft">logo_guess.py</span>
+        </div>
 
         <div className="mt-4 flex min-h-8 items-center justify-between gap-3">
           {solved ? (
@@ -222,9 +229,9 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
         </div>
 
         <div
-          className="relative mt-3 overflow-hidden rounded-xl border border-border bg-[#fbfdfc] shadow-[inset_0_1px_3px_rgb(15_42_36/0.08)] dark:bg-[#dfe9e5]"
+          className="relative mt-3 overflow-hidden rounded-xl border border-line bg-(--board)"
           style={{
-            backgroundImage: "radial-gradient(rgb(15 42 36 / 0.13) 1px, transparent 1px)",
+            backgroundImage: "radial-gradient(var(--board-dot) 1px, transparent 1px)",
             backgroundSize: "18px 18px",
             backgroundPosition: "9px 9px",
           }}
@@ -240,7 +247,7 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
             className="block h-64 w-full cursor-crosshair touch-none sm:h-72"
           />
           {strokeCount === 0 && (
-            <span className="pointer-events-none absolute inset-0 grid place-items-center font-mono text-[12px] text-[#7b928c]">
+            <span className="pointer-events-none absolute inset-0 grid place-items-center text-[14px] text-[#8a8478]">
               draw here
             </span>
           )}
@@ -277,9 +284,9 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
           </div>
         </div>
 
-        <div className="mt-4 w-full border-t border-border pt-4" aria-live="polite">
+        <div className="mt-4 w-full border-t border-line pt-4" aria-live="polite">
           <div className="flex items-baseline justify-between">
-            <span className="eyebrow">guess</span>
+            <span className="text-[13px] font-semibold text-ink-soft">Best guess</span>
             <span className="font-mono text-[11px] text-ink-faint tabular-nums">
               {ms === null ? "idle" : `${ms.toFixed(2)} ms`}
             </span>
@@ -290,19 +297,19 @@ export function LogoGuesser({ intro }: { intro: ReactNode }) {
           <ul className="mt-3 space-y-2">
             {rows.map((g, i) => (
               <li key={i} className="grid grid-cols-[7rem_1fr_2.75rem] items-center gap-3">
-                <span className={cn("truncate font-mono text-[11px]", g ? "text-ink" : "text-ink-faint")}>
+                <span className={cn("truncate text-[13px]", g ? "text-ink" : "text-ink-faint")}>
                   {g?.name ?? "—"}
                 </span>
                 <span className="relative h-1.5 overflow-hidden rounded-full bg-ink/[0.06]">
                   <span
                     className={cn(
                       "absolute inset-y-0 left-0 rounded-full transition-[width] duration-150",
-                      i === 0 ? "bg-ink" : "bg-ink/35",
+                      i === 0 ? "bg-hc-red" : "bg-ink/30",
                     )}
                     style={{ width: `${(g?.confidence ?? 0) * 100}%` }}
                   />
                 </span>
-                <span className="text-right font-mono text-[11px] text-ink-soft tabular-nums">
+                <span className="text-right font-mono text-[12px] text-ink-soft tabular-nums">
                   {g ? `${Math.round(g.confidence * 100)}%` : "—"}
                 </span>
               </li>

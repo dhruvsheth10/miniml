@@ -43,7 +43,7 @@ export function ThemeToggle() {
       onClick={toggle}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={dark}
-      className="glass grid size-9 cursor-pointer place-items-center rounded-full text-ink-soft transition-colors outline-none hover:text-ink focus-visible:ring-3 focus-visible:ring-hc-red/40"
+      className="grid size-9 cursor-pointer place-items-center rounded-lg text-ink-soft transition-colors outline-none hover:bg-ink/5 hover:text-ink focus-visible:ring-3 focus-visible:ring-hc-red/40"
     >
       {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
     </button>

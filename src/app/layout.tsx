@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, Bai_Jamjuree, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { THEME_STORAGE_KEY } from "@/lib/site";
 
 import "./globals.css";
@@ -16,12 +16,6 @@ const plexMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-const baiJamjuree = Bai_Jamjuree({
-  variable: "--font-bai-jamjuree",
-  subsets: ["latin"],
-  weight: ["600"],
-});
-
 export const metadata: Metadata = {
   title: "MiniML · Teach a tiny chip to see, think, and hear",
   description:
@@ -30,8 +24,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#e9f5ef" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b1613" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f3ec" },
+    { media: "(prefers-color-scheme: dark)", color: "#161512" },
   ],
 };
 
@@ -40,7 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${archivo.variable} ${plexMono.variable} ${baiJamjuree.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <head>
         {/* Runs before paint: a saved choice wins, otherwise follow the system theme, with no light flash. */}
